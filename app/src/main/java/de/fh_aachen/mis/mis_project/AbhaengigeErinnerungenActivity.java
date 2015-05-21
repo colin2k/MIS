@@ -1,25 +1,24 @@
 package de.fh_aachen.mis.mis_project;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends Activity {
+public class AbhaengigeErinnerungenActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_abhaengige_erinnerungen);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_abhaengige_erinnerungen, menu);
         return true;
     }
 
@@ -32,20 +31,6 @@ public class MainActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
-        }
-
-        // personen standorte
-        if (id == R.id.story_10) {
-            Intent intent = new Intent(this, PersonenstandorteActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        // abhaengige erinnerungen
-        if (id == R.id.story_12) {
-            Intent intent = new Intent(this, AbhaengigeErinnerungenActivity.class);
-            startActivity(intent);
             return true;
         }
 

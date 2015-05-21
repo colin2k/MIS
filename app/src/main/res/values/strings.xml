@@ -3,4 +3,19 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="story_1">Story 1</string>
+    <string name="story_2">Story 2</string>
+    <string name="story_3">Story 3</string>
+    <string name="story_4">Story 4</string>
+    <string name="story_5">Story 5</string>
+    <string name="story_6">Story 6</string>
+    <string name="story_7">Story 7</string>
+    <string name="story_8">Story 8</string>
+    <string name="story_9">Story 9</string>
+    <string name="story_10">Personenstandorte</string>
+    <string name="story_11">Story 9</string>
+    <string name="story_12">Abhängige Erninnerungen</string>
+    <string name="title_activity_personenstandorte">PersonenstandorteActivity</string>
+    <string name="title_activity_abhaengige_erinnerungen">AbhaengigeErinnerungenActivity</string>
 </resources>
