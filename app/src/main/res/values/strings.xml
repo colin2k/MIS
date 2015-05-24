@@ -18,4 +18,8 @@
     <string name="story_12">Abhängige Erninnerungen</string>
     <string name="title_activity_personenstandorte">PersonenstandorteActivity</string>
     <string name="title_activity_abhaengige_erinnerungen">AbhaengigeErinnerungenActivity</string>
+
+
+    <string name="action_new_note">New</string>
+    <string name="title_activity_new_note">NewNoteActivity</string>
 </resources>
