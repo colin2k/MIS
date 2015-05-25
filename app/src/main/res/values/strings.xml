@@ -9,7 +9,7 @@
     <string name="story_3">Story 3</string>
     <string name="story_4">Story 4</string>
     <string name="story_5">Story 5</string>
-    <string name="story_6">Story 6</string>
+    <string name="story_6">Prioritäten</string>
     <string name="story_7">Story 7</string>
     <string name="story_8">Story 8</string>
     <string name="story_9">Story 9</string>
@@ -18,4 +18,11 @@
     <string name="story_12">Abhängige Erninnerungen</string>
     <string name="title_activity_personenstandorte">PersonenstandorteActivity</string>
     <string name="title_activity_abhaengige_erinnerungen">AbhaengigeErinnerungenActivity</string>
+    <string name="title_activity_prio">Prioritäten</string>
+
+
+    <string name="Notizname">Beispielnotiz</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -24,6 +24,10 @@
             android:name=".AbhaengigeErinnerungenActivity"
             android:label="@string/title_activity_abhaengige_erinnerungen" >
         </activity>
+        <activity
+            android:name=".PrioActivity"
+            android:label="@string/title_activity_prio" >
+        </activity>
     </application>
 
 </manifest>
