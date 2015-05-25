@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class NoteDataSource {
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     private String[] allColumns = { DatabaseHelper.COLUMN_ID,
-            DatabaseHelper.COLUMN_NOTE };
+            DatabaseHelper.COLUMN_NOTE, DatabaseHelper.COLUMN_HAS_REMINDER, DatabaseHelper.COLUMN_DATETIME};
 
     public NoteDataSource(Context context) {
         dbHelper = new DatabaseHelper(context);
@@ -33,9 +35,13 @@ public class NoteDataSource {
         dbHelper.close();
     }
 
-    public Note createNote(String note) {
+    public Note createNote(String note, boolean has_reminder, String remind_me_datetime) {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_NOTE, note);
+        Log.v("create note:", "has_reminder:" + has_reminder);
+        values.put(DatabaseHelper.COLUMN_HAS_REMINDER, has_reminder);
+        values.put(DatabaseHelper.COLUMN_DATETIME, remind_me_datetime);
+
         long insertId = database.insert(DatabaseHelper.TABLE_NOTES, null,
                 values);
         Cursor cursor = database.query(DatabaseHelper.TABLE_NOTES,
@@ -71,10 +77,28 @@ public class NoteDataSource {
         return notes;
     }
 
+    public Note getNoteById(long id) {
+        Note note = null;
+
+        Cursor cursor = database.query(DatabaseHelper.TABLE_NOTES,
+                allColumns, DatabaseHelper.COLUMN_ID + " = " + id, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            note = cursorToNote(cursor);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return note;
+    }
+
     private Note cursorToNote(Cursor cursor) {
         Note note = new Note();
         note.setId(cursor.getLong(0));
         note.setNoteText(cursor.getString(1));
+        note.setHasReminder(cursor.getInt(2) == 1);
+        note.setDatetimeStr(cursor.getString(3));
         return note;
     }
 }

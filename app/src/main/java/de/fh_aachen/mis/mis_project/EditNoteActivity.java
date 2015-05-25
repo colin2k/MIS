@@ -1,8 +1,11 @@
 package de.fh_aachen.mis.mis_project;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,52 +16,67 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import de.fh_aachen.mis.mis_project.database.NoteDataSource;
+import de.fh_aachen.mis.mis_project.model.Note;
 
-public class NewNoteActivity extends Activity {
 
+public class EditNoteActivity extends Activity {
+
+    private Note note;
     private NoteDataSource datasource;
-
-    String remind_me_datetime;
-    private DatePickerDialog remind_me_date_picker;
-    private TimePickerDialog remind_me_time_picker;
 
     Button save_btn;
     Switch remind_me_switch;
+    Switch multi_remind_me_switch;
     EditText textarea;
-
     Context context;
+    String remind_me_datetime;
 
+    private DatePickerDialog remind_me_date_picker;
+    private TimePickerDialog remind_me_time_picker;
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_note);
+        setContentView(R.layout.activity_edit_note);
 
-        remind_me_datetime ="";
+        remind_me_datetime = "";
 
         datasource = new NoteDataSource(this);
         datasource.open();
 
+
+        Intent intent = getIntent();
+        String note_id = intent.getStringExtra("note_id");
+
         context = this;
+
+        note = datasource.getNoteById(Long.parseLong(note_id, 10));
+        Log.v("note edit loaded: ", note.toString());
+
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         timeFormatter = new SimpleDateFormat("H:m:s", Locale.US);
 
         save_btn = (Button) findViewById(R.id.note_save_button);
         remind_me_switch = (Switch) findViewById(R.id.note_remind_me_switch);
+        multi_remind_me_switch = (Switch) findViewById(R.id.edit_multiple_reminders);
         textarea = (EditText) findViewById(R.id.note_data);
+
+        multi_remind_me_switch.setVisibility(View.INVISIBLE);
+        textarea.setText(note.getNoteText());
+        remind_me_switch.setChecked(note.getHasReminder());
+        if(note.getHasReminder()){
+            multi_remind_me_switch.setVisibility(View.VISIBLE);
+        }
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +84,13 @@ public class NewNoteActivity extends Activity {
                 Log.v("SaveBtn", "Clicked");
                 String text = textarea.getText().toString();
                 boolean has_reminder = remind_me_switch.isChecked();
-                datasource.createNote(text,has_reminder,remind_me_datetime);
+                boolean has_multi_reminder = multi_remind_me_switch.isChecked();
+
+                Intent intent = new Intent(context, NoteSelectionActivity.class);
+                intent.putExtra("reminder_date", remind_me_datetime);
+                startActivityForResult(intent, 1);
+               // datasource.createNote(text,has_reminder,remind_me_datetime);
+                Toast.makeText(context, "Note(s) edited", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK, null);
                 finish();
             }
@@ -86,10 +110,11 @@ public class NewNoteActivity extends Activity {
                             newDate.set(1,1,1,hourOfDay,minute);
                             remind_me_datetime += " " + timeFormatter.format(newDate.getTime());
                             Log.v("time is: ", remind_me_datetime);
+                            multi_remind_me_switch.setVisibility(View.VISIBLE);
                         }
                     },newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE), true);
 
-                    remind_me_date_picker =  new DatePickerDialog(context, new OnDateSetListener() {
+                    remind_me_date_picker =  new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
 
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                             Calendar newDate = Calendar.getInstance();
@@ -112,30 +137,17 @@ public class NewNoteActivity extends Activity {
                 }
                 else{
                     Log.v("RemindMeS", "Unchecked");
+                    multi_remind_me_switch.setVisibility(View.INVISIBLE);
                 }
             }
         });
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        datasource.open();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        datasource.close();
-        super.onPause();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_note, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_note, menu);
         return true;
     }
 
@@ -152,5 +164,28 @@ public class NewNoteActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+
+            /*Intent refresh = new Intent(this, AbhaengigeErinnerungenActivity.class);
+            startActivity(refresh);
+            this.finish();*/
+        }
     }
 }

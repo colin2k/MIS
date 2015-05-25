@@ -22,4 +22,8 @@
 
     <string name="action_new_note">New</string>
     <string name="title_activity_new_note">NewNoteActivity</string>
+    <string name="remove_note">Remove Note</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="title_activity_edit_note">EditNoteActivity</string>
+    <string name="title_activity_note_selection">NoteSelectionActivity</string>
 </resources>

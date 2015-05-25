@@ -1,13 +1,20 @@
 package de.fh_aachen.mis.mis_project;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,12 +28,17 @@ public class AbhaengigeErinnerungenActivity extends Activity {
     private ArrayAdapter<Note> note_list_adapter;
     private NoteDataSource datasource;
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abhaengige_erinnerungen);
 
+        context = this;
+
         note_list = (ListView) findViewById(R.id.note_list);
+        registerForContextMenu(note_list);
 
         datasource = new NoteDataSource(this);
         datasource.open();
@@ -38,6 +50,38 @@ public class AbhaengigeErinnerungenActivity extends Activity {
                 android.R.layout.simple_list_item_1, values);
         Log.v("notes:", ""+note_list_adapter.getCount() +" datasets loaded.");
         note_list.setAdapter(note_list_adapter);
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.note_list) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.notes_modification_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Note note = note_list_adapter.getItem(info.position);
+        switch(item.getItemId()) {
+            case R.id.remove_note:
+                // remove stuff here
+                datasource.deleteNote(note);
+                reloadAllData();
+                Toast.makeText(context, "Note Deleted", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.edit_note:
+                // edit stuff here
+                Intent intent = new Intent(this, EditNoteActivity.class);
+                intent.putExtra("note_id", ""+note.getId());
+                Log.v("the note_id should be:", ""+note.getId());
+                startActivityForResult(intent, 1);
+                reloadAllData();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     private void reloadAllData(){

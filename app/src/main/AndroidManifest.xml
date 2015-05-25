@@ -28,6 +28,14 @@
             android:name=".NewNoteActivity"
             android:label="@string/title_activity_new_note" >
         </activity>
+        <activity
+            android:name=".EditNoteActivity"
+            android:label="@string/title_activity_edit_note" >
+        </activity>
+        <activity
+            android:name=".NoteSelectionActivity"
+            android:label="@string/title_activity_note_selection" >
+        </activity>
     </application>
 
 </manifest>
