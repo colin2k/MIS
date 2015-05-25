@@ -58,8 +58,12 @@ public class Note {
         this.datetime_str = datetime;
     }
 
+    public String getDatetimeStr(){
+        return this.datetime_str;
+    }
+
     @Override
     public String toString() {
-        return note + ", has_reminder: " + has_reminder + ", when: " + datetime_str;
+        return note + (has_reminder ? ("\nwhen: " + datetime_str) : "");
     }
 }

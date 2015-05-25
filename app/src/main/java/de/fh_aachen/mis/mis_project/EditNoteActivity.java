@@ -49,7 +49,7 @@ public class EditNoteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
-        remind_me_datetime = "";
+        setTitle("Edit Note");
 
         datasource = new NoteDataSource(this);
         datasource.open();
@@ -58,10 +58,13 @@ public class EditNoteActivity extends Activity {
         Intent intent = getIntent();
         String note_id = intent.getStringExtra("note_id");
 
+
+
         context = this;
 
         note = datasource.getNoteById(Long.parseLong(note_id, 10));
         Log.v("note edit loaded: ", note.toString());
+        remind_me_datetime = note.getDatetimeStr();
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         timeFormatter = new SimpleDateFormat("H:m:s", Locale.US);
@@ -86,11 +89,18 @@ public class EditNoteActivity extends Activity {
                 boolean has_reminder = remind_me_switch.isChecked();
                 boolean has_multi_reminder = multi_remind_me_switch.isChecked();
 
-                Intent intent = new Intent(context, NoteSelectionActivity.class);
-                intent.putExtra("reminder_date", remind_me_datetime);
-                startActivityForResult(intent, 1);
-               // datasource.createNote(text,has_reminder,remind_me_datetime);
-                Toast.makeText(context, "Note(s) edited", Toast.LENGTH_SHORT).show();
+                note.setDatetimeStr(remind_me_datetime);
+                note.setHasReminder(has_reminder);
+                note.setNoteText(text);
+
+                datasource.updateNote(note);
+
+                if(multi_remind_me_switch.isChecked()) {
+                    Intent intent = new Intent(context, NoteSelectionActivity.class);
+                    intent.putExtra("reminder_date", remind_me_datetime);
+                    startActivityForResult(intent, 1);
+                }
+
                 setResult(RESULT_OK, null);
                 finish();
             }

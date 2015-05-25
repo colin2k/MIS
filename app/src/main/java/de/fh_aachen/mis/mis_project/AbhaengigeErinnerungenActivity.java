@@ -37,6 +37,7 @@ public class AbhaengigeErinnerungenActivity extends Activity {
 
         context = this;
 
+        setTitle("Overview");
         note_list = (ListView) findViewById(R.id.note_list);
         registerForContextMenu(note_list);
 
@@ -140,6 +141,7 @@ public class AbhaengigeErinnerungenActivity extends Activity {
         if(resultCode==RESULT_OK){
             Intent refresh = new Intent(this, AbhaengigeErinnerungenActivity.class);
             startActivity(refresh);
+            //Log.v("refreshing note list view","");
             this.finish();
         }
     }

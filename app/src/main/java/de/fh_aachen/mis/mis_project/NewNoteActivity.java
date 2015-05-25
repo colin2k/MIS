@@ -48,7 +48,7 @@ public class NewNoteActivity extends Activity {
         setContentView(R.layout.activity_new_note);
 
         remind_me_datetime ="";
-
+        setTitle("New Note");
         datasource = new NoteDataSource(this);
         datasource.open();
 

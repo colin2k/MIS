@@ -9,12 +9,15 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:id="@+id/linearLayout"
+        android:layout_above="@+id/note_save_button"
+        android:layout_alignParentTop="true">
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="200dp"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/note_data"
@@ -27,12 +30,14 @@
             android:text="Remind me"
             android:id="@+id/note_remind_me_switch" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/note_save_button" />
-
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/note_save_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

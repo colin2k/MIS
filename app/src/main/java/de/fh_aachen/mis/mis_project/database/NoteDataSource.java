@@ -60,6 +60,14 @@ public class NoteDataSource {
                 + " = " + id, null);
     }
 
+    public void updateNote(Note note) {
+        ContentValues args = new ContentValues();
+        args.put("note", note.getNoteText());
+        args.put("has_reminder", note.getHasReminder());
+        args.put("remind_date", note.getDatetimeStr());
+        database.update(DatabaseHelper.TABLE_NOTES, args, "_id=" + note.getId(), null);
+    }
+
     public List<Note> getAllNotes() {
         List<Note> notes = new ArrayList<Note>();
 
