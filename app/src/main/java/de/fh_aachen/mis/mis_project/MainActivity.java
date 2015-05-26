@@ -29,9 +29,15 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        int PLACE_PICKER_REQUEST = 1;
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.story_1){
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
             return true;
         }
 
