@@ -3,4 +3,42 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="story_1">PlacePicker</string>
+    <string name="story_2">Story 2</string>
+    <string name="story_3">Story 3</string>
+    <string name="story_4">Story 4</string>
+    <string name="story_5">Story 5</string>
+    <string name="story_6">Prioritäten</string>
+    <string name="story_7">Story 7</string>
+    <string name="story_8">Story 8</string>
+    <string name="story_9">Story 9</string>
+    <string name="story_10">Personenstandorte</string>
+    <string name="story_11">Story 9</string>
+    <string name="story_12">Abhängige Erninnerungen</string>
+    <string name="title_activity_personenstandorte">PersonenstandorteActivity</string>
+    <string name="title_activity_abhaengige_erinnerungen">AbhaengigeErinnerungenActivity</string>
+    <string name="title_activity_prio">Prioritäten</string>
+    <string name="title_activity_place_note">Adressen Notiz</string>
+    <string name="txtPlace">Adresse</string>
+    <string name="btnPlace">Adresse auswählen</string>
+    <string name="txtPickedPlace">Adresse auswählen</string>
+
+
+
+    <string name="Notizname">Beispielnotiz</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="action_new_note">New</string>
+    <string name="title_activity_new_note">NewNoteActivity</string>
+    <string name="remove_note">Remove Note</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="title_activity_edit_note">EditNoteActivity</string>
+    <string name="title_activity_note_selection">NoteSelectionActivity</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+    <string name="note_email_hint">E-Mail for notifications</string>
+    <string name="title_activity_maps">PlacePicker</string>
 </resources>

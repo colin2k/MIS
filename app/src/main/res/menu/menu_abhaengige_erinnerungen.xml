@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.fh_aachen.mis.mis_project.AbhaengigeErinnerungenActivity">
+    <item android:id="@+id/action_new_note" android:title="@string/action_new_note"
+        android:orderInCategory="0" android:showAsAction="always" android:icon="@android:drawable/ic_menu_add"/>
+</menu>

@@ -2,6 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.fh_aachen.mis.mis_project" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!--
+ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,6 +26,52 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".PersonenstandorteActivity"
+            android:label="@string/title_activity_personenstandorte" >
+        </activity>
+        <activity
+            android:name=".AbhaengigeErinnerungenActivity"
+            android:label="@string/title_activity_abhaengige_erinnerungen" >
+        </activity>
+        <activity
+            android:name=".PrioActivity"
+            android:label="@string/title_activity_prio" >
+        </activity>
+        <activity
+            android:name=".NewNoteActivity"
+            android:label="@string/title_activity_new_note" >
+        </activity>
+        <activity
+            android:name=".EditNoteActivity"
+            android:label="@string/title_activity_edit_note" >
+        </activity>
+        <activity
+            android:name=".NoteSelectionActivity"
+            android:label="@string/title_activity_note_selection" >
+        </activity>
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name=".PlaceNoteActivity"
+            android:label="@string/title_activity_maps" >
         </activity>
     </application>
 

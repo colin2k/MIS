@@ -1,5 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <item android:id="@+id/story_1" android:title="@string/story_1"
+        android:orderInCategory="100" />
+    <item android:id="@+id/story_2" android:title="@string/story_2"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_3" android:title="@string/story_3"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_4" android:title="@string/story_4"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_5" android:title="@string/story_5"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_6" android:title="@string/story_6"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_7" android:title="@string/story_7"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_8" android:title="@string/story_8"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_9" android:title="@string/story_9"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_10" android:title="@string/story_10"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_11" android:title="@string/story_11"
+        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/story_12" android:title="@string/story_12"
+        android:orderInCategory="100" android:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" />
 </menu>

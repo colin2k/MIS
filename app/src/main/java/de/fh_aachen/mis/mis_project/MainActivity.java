@@ -1,6 +1,7 @@
 package de.fh_aachen.mis.mis_project;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,9 +29,35 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        int PLACE_PICKER_REQUEST = 1;
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.story_1){
+            Intent intent = new Intent(this, PlaceNoteActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.story_6){
+            Intent intent = new Intent(this, PrioActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        // personen standorte
+        if (id == R.id.story_10) {
+            Intent intent = new Intent(this, PersonenstandorteActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        // abhaengige erinnerungen
+        if (id == R.id.story_12) {
+            Intent intent = new Intent(this, AbhaengigeErinnerungenActivity.class);
+            startActivity(intent);
             return true;
         }
 
