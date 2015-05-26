@@ -1,5 +1,6 @@
 package de.fh_aachen.mis.mis_project;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -75,12 +76,14 @@ public class MapsActivity extends FragmentActivity {
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-
+            public void onMapLongClick(LatLng latLng) {
+                Intent i = getIntent();
+                i.putExtra("location",latLng);
+                setResult(1,i);
                 finish();
-                return false;
+
             }
         });
 

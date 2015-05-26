@@ -26,6 +26,7 @@ public class PlaceNoteActivity extends Activity implements GoogleMap.OnMapClickL
     private Button btnPlacePicker;
     private Context context;
     private LatLng location;
+    private TextView txtLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class PlaceNoteActivity extends Activity implements GoogleMap.OnMapClickL
         final EditText dateField =  (EditText) this.findViewById(R.id.input_date);
         dateField.setText(String.format("%02d.%02d.%04d", day, month+1, year));
 
-        final TextView txtLocation = (TextView) this.findViewById(R.id.txtPickedPlace);
+        txtLocation = (TextView) this.findViewById(R.id.txtPickedPlace);
         txtLocation.setText(location.toString());
 
 
@@ -59,15 +60,27 @@ public class PlaceNoteActivity extends Activity implements GoogleMap.OnMapClickL
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MapsActivity.class);
-
                 intent.putExtra("location",location);
-                
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
     }
-    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        TextView txtLocation = (TextView) this.findViewById(R.id.txtPickedPlace);
+        Bundle extras = data.getExtras();
+        location = (LatLng) extras.get("location");
+        txtLocation.setText(location.toString());
+
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
