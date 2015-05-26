@@ -1,7 +1,9 @@
 package de.fh_aachen.mis.mis_project;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,14 +19,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import de.fh_aachen.mis.mis_project.database.NoteDataSource;
 import de.fh_aachen.mis.mis_project.model.Note;
+import de.fh_aachen.mis.mis_project.receiver.AlarmReceiver;
 
 
 public class EditNoteActivity extends Activity {
@@ -44,6 +48,8 @@ public class EditNoteActivity extends Activity {
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
 
+    public static int REQUEST_CODE = 811512;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +62,7 @@ public class EditNoteActivity extends Activity {
 
 
         Intent intent = getIntent();
-        String note_id = intent.getStringExtra("note_id");
+        final String note_id = intent.getStringExtra("note_id");
 
 
 
@@ -94,6 +100,25 @@ public class EditNoteActivity extends Activity {
                 note.setNoteText(text);
 
                 datasource.updateNote(note);
+
+                Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+                alarmIntent.putExtra("note_id", note_id);
+                PendingIntent sender = PendingIntent.getBroadcast(context, EditNoteActivity.REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                // Build a calendar instance to get the milliseconds of note.getDate
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy H:mm:ss");
+                try {
+                    Date parsedDate = formatter.parse(note.getDatetimeStr());
+                    cal.setTime(parsedDate);
+                }
+                catch (ParseException e) {
+                    Log.e(EditNoteActivity.class.getName(), "failed to match " + note.getDatetimeStr() + " against " + formatter.toPattern());
+                }
+
+                // Get the AlarmManager service
+                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 
                 if(multi_remind_me_switch.isChecked()) {
                     Intent intent = new Intent(context, NoteSelectionActivity.class);

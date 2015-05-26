@@ -33,4 +33,5 @@
     <string name="edit_note">Edit Note</string>
     <string name="title_activity_edit_note">EditNoteActivity</string>
     <string name="title_activity_note_selection">NoteSelectionActivity</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
 </resources>

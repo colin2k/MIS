@@ -1,8 +1,11 @@
 package de.fh_aachen.mis.mis_project;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,12 +21,15 @@ import android.app.TimePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import de.fh_aachen.mis.mis_project.database.NoteDataSource;
+import de.fh_aachen.mis.mis_project.model.Note;
+import de.fh_aachen.mis.mis_project.receiver.AlarmReceiver;
 
 public class NewNoteActivity extends Activity {
 
@@ -66,7 +72,30 @@ public class NewNoteActivity extends Activity {
                 Log.v("SaveBtn", "Clicked");
                 String text = textarea.getText().toString();
                 boolean has_reminder = remind_me_switch.isChecked();
-                datasource.createNote(text,has_reminder,remind_me_datetime);
+                Note note = datasource.createNote(text,has_reminder,remind_me_datetime);
+
+                // set up an alert if the note has a reminder
+                if (has_reminder) {
+                    Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+                    alarmIntent.putExtra("note_id", note.getId());
+                    PendingIntent sender = PendingIntent.getBroadcast(context, EditNoteActivity.REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    // Build a calendar instance to get the milliseconds of note.getDate
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy H:mm:ss");
+                    try {
+                        Date parsedDate = formatter.parse(note.getDatetimeStr());
+                        cal.setTime(parsedDate);
+                    }
+                    catch (ParseException e) {
+                        Log.e(EditNoteActivity.class.getName(), "failed to match " + note.getDatetimeStr() + " against " + formatter.toPattern());
+                    }
+
+                    // Get the AlarmManager service
+                    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+                }
+
                 setResult(RESULT_OK, null);
                 finish();
             }
