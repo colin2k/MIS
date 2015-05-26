@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +25,8 @@ public class PlaceNoteActivity extends Activity implements GoogleMap.OnMapClickL
 
     private Button btnPlacePicker;
     private Context context;
+    private LatLng location;
+    private TextView txtLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class PlaceNoteActivity extends Activity implements GoogleMap.OnMapClickL
 
         context = this;
         Date date = new Date();
+        location = new LatLng(50.7586453, 6.0851664); // FH-Aachen
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
@@ -47,18 +51,36 @@ public class PlaceNoteActivity extends Activity implements GoogleMap.OnMapClickL
         final EditText dateField =  (EditText) this.findViewById(R.id.input_date);
         dateField.setText(String.format("%02d.%02d.%04d", day, month+1, year));
 
+        txtLocation = (TextView) this.findViewById(R.id.txtPickedPlace);
+        txtLocation.setText(location.toString());
+
+
         btnPlacePicker = (Button) findViewById(R.id.btnPlace);
         btnPlacePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MapsActivity.class);
-                
-                startActivity(intent);
+                intent.putExtra("location",location);
+                startActivityForResult(intent, 1);
             }
         });
 
     }
-    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        TextView txtLocation = (TextView) this.findViewById(R.id.txtPickedPlace);
+        Bundle extras = data.getExtras();
+        location = (LatLng) extras.get("location");
+        txtLocation.setText(location.toString());
+
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

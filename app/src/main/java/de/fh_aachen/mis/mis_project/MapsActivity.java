@@ -1,5 +1,6 @@
 package de.fh_aachen.mis.mis_project;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -15,10 +16,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private LatLng location;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        location = (LatLng) extras.get("location");
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
@@ -64,19 +69,21 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        LatLng Aachen = new LatLng(50.7586453, 6.0851664);
-        mMap.addMarker(new MarkerOptions().position(Aachen).title("FH-Aachen - Sample").draggable(true));
-        mMap.addCircle(new CircleOptions().center(Aachen).radius(50).fillColor(R.color.FHgreen));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Aachen, 15));
+
+        mMap.addMarker(new MarkerOptions().position(location).title("FH-Aachen - Sample").draggable(true));
+        mMap.addCircle(new CircleOptions().center(location).radius(50).fillColor(R.color.FHgreen));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-
+            public void onMapLongClick(LatLng latLng) {
+                Intent i = getIntent();
+                i.putExtra("location",latLng);
+                setResult(1,i);
                 finish();
-                return false;
+
             }
         });
 
