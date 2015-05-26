@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         }
 
         if (id == R.id.story_1){
-            Intent intent = new Intent(this, MapsActivity.class);
+            Intent intent = new Intent(this, PlaceNoteActivity.class);
             startActivity(intent);
             return true;
         }

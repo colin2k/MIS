@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity {
@@ -64,11 +65,20 @@ public class MapsActivity extends FragmentActivity {
      */
     private void setUpMap() {
         LatLng Aachen = new LatLng(50.7586453, 6.0851664);
-        mMap.addMarker(new MarkerOptions().position(Aachen).title("FH-Aachen").draggable(true));
-        mMap.addCircle(new CircleOptions().center(Aachen).radius(50).fillColor(3));
+        mMap.addMarker(new MarkerOptions().position(Aachen).title("FH-Aachen - Sample").draggable(true));
+        mMap.addCircle(new CircleOptions().center(Aachen).radius(50).fillColor(R.color.FHgreen));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Aachen, 15));
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                finish();
+                return false;
+            }
+        });
 
     }
 }

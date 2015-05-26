@@ -19,6 +19,11 @@
     <string name="title_activity_personenstandorte">PersonenstandorteActivity</string>
     <string name="title_activity_abhaengige_erinnerungen">AbhaengigeErinnerungenActivity</string>
     <string name="title_activity_prio">Prioritäten</string>
+    <string name="title_activity_place_note">Adressen Notiz</string>
+    <string name="txtPlace">Adresse</string>
+    <string name="btnPlace">Adresse auswählen</string>
+    <string name="txtPickedPlace">Adresse auswählen</string>
+
 
 
     <string name="Notizname">Beispielnotiz</string>
