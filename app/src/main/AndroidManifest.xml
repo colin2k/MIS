@@ -25,6 +25,10 @@
             android:label="@string/title_activity_abhaengige_erinnerungen" >
         </activity>
         <activity
+            android:name=".PrioActivity"
+            android:label="@string/title_activity_prio" >
+        </activity>
+        <activity
             android:name=".NewNoteActivity"
             android:label="@string/title_activity_new_note" >
         </activity>

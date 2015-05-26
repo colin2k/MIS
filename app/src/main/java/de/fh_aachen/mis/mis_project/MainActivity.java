@@ -35,6 +35,12 @@ public class MainActivity extends Activity {
             return true;
         }
 
+        if (id == R.id.story_6){
+            Intent intent = new Intent(this, PrioActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         // personen standorte
         if (id == R.id.story_10) {
             Intent intent = new Intent(this, PersonenstandorteActivity.class);
