@@ -18,7 +18,9 @@ public class SendEmailAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
     public SendEmailAsyncTask(String noteId, String reminder_email) {
         this.noteId = noteId;
-        this.receiver = reminder_email;
+        if (reminder_email != null) {
+            this.receiver = reminder_email;
+        }
     }
 
     @Override

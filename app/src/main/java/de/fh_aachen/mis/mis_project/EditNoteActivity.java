@@ -123,6 +123,7 @@ public class EditNoteActivity extends Activity {
                 if(multi_remind_me_switch.isChecked()) {
                     Intent intent = new Intent(context, NoteSelectionActivity.class);
                     intent.putExtra("reminder_date", remind_me_datetime);
+                    intent.putExtra("reminder_email", note.getReminder_email());
                     startActivityForResult(intent, 1);
                 }
 
