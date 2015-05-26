@@ -30,6 +30,14 @@
             android:text="Remind me"
             android:id="@+id/note_remind_me_switch" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/note_email"
+            android:hint="@string/note_email_hint" />
+
 
     </LinearLayout>
 
