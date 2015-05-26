@@ -53,6 +53,13 @@ public class NoteDataSource {
         return newNote;
     }
 
+    public Note createNote(String note, boolean has_reminder, String remind_me_datetime, String reminder_email) {
+        Note newNote = this.createNote(note, has_reminder,remind_me_datetime);
+        newNote.setReminder_email(reminder_email);
+
+        return newNote;
+    }
+
     public void deleteNote(Note note) {
         long id = note.getId();
         System.out.println("Note deleted with id: " + id);

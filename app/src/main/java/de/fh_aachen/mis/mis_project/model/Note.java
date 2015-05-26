@@ -13,6 +13,7 @@ public class Note {
     private Date remind_date;
     private Time remind_time;
     private String datetime_str;
+    private String reminder_email;
 
     public long getId() {
         return id;
@@ -60,6 +61,14 @@ public class Note {
 
     public String getDatetimeStr(){
         return this.datetime_str;
+    }
+
+    public String getReminder_email() {
+        return reminder_email;
+    }
+
+    public void setReminder_email(String reminder_email) {
+        this.reminder_email = reminder_email;
     }
 
     @Override

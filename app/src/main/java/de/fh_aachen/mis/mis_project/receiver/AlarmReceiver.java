@@ -19,7 +19,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         try {
             Bundle bundle = intent.getExtras();
             String noteId = bundle.getString("note_id");
-            new SendEmailAsyncTask(noteId).execute();
+            String reminder_email = bundle.getString("reminder_email");
+            new SendEmailAsyncTask(noteId, reminder_email).execute();
 
             CharSequence message = "Note with ID " + String.valueOf(noteId);
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();

@@ -42,6 +42,7 @@ public class NewNoteActivity extends Activity {
     Button save_btn;
     Switch remind_me_switch;
     EditText textarea;
+    EditText reminder_email;
 
     Context context;
 
@@ -65,6 +66,7 @@ public class NewNoteActivity extends Activity {
         save_btn = (Button) findViewById(R.id.note_save_button);
         remind_me_switch = (Switch) findViewById(R.id.note_remind_me_switch);
         textarea = (EditText) findViewById(R.id.note_data);
+        reminder_email = (EditText) findViewById(R.id.note_email);
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +80,7 @@ public class NewNoteActivity extends Activity {
                 if (has_reminder) {
                     Intent alarmIntent = new Intent(context, AlarmReceiver.class);
                     alarmIntent.putExtra("note_id", note.getId());
+                    alarmIntent.putExtra("reminderMail", note.getReminder_email());
                     PendingIntent sender = PendingIntent.getBroadcast(context, EditNoteActivity.REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     // Build a calendar instance to get the milliseconds of note.getDate

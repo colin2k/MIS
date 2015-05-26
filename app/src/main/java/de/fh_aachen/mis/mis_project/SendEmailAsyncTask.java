@@ -10,16 +10,22 @@ public class SendEmailAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
     GMailSender sender = new GMailSender("mis@xenzilla.de", "eJne488c");
     String noteId;
+    String receiver = "mis@xenzilla.de";
 
     public SendEmailAsyncTask(String noteId) {
         this.noteId = noteId;
+    }
+
+    public SendEmailAsyncTask(String noteId, String reminder_email) {
+        this.noteId = noteId;
+        this.receiver = reminder_email;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
         if (BuildConfig.DEBUG) Log.v(SendEmailAsyncTask.class.getName(), "doInBackground()");
         try {
-            sender.sendMail("Notification for Note #" + noteId, "Note Text", "mis@xenzilla.de", "to@gmail.com");
+            sender.sendMail("Notification for Note #" + noteId, "Note Text", "mis@xenzilla.de", receiver);
             return true;
         } catch (AuthenticationFailedException e) {
             Log.e(SendEmailAsyncTask.class.getName(), "Bad account details");
