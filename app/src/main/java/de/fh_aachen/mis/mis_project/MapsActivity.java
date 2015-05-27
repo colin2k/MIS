@@ -1,8 +1,12 @@
 package de.fh_aachen.mis.mis_project;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +28,21 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         location = (LatLng) extras.get("location");
+
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(!isConnected){
+            Intent in = new Intent();
+            in.putExtra("location",location);
+            setResult(1, in);
+            Toast.makeText(this,"Es wurde keine Verbindung zum Internet gefunden.",Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
