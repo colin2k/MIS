@@ -1,6 +1,8 @@
 package de.fh_aachen.mis.mis_project.model;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -64,6 +66,14 @@ public class Note {
 
     @Override
     public String toString() {
-        return note + (has_reminder ? ("\nwhen: " + datetime_str) : "");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy H:m:s");
+        SimpleDateFormat myformat = new SimpleDateFormat("dd-MM-yyyy H:m");
+        String formatted_date = null;
+        try {
+            formatted_date = myformat.format(sdf.parse(datetime_str));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return note + (has_reminder ? ("\nWhen: " + formatted_date) : "");
     }
 }
