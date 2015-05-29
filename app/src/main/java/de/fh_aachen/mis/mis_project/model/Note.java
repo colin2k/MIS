@@ -9,12 +9,17 @@ import java.util.Date;
  * Created by batman on 5/25/15.
  */
 public class Note {
+
     private long id;
     private String note;
     private boolean has_reminder;
     private Date remind_date;
     private Time remind_time;
     private String datetime_str;
+    private String reminder_email;
+
+    private String location;
+    private int priority;
 
     public long getId() {
         return id;
@@ -62,6 +67,30 @@ public class Note {
 
     public String getDatetimeStr(){
         return this.datetime_str;
+    }
+
+    public String getReminder_email() {
+        return reminder_email;
+    }
+
+    public void setReminder_email(String reminder_email) {
+        this.reminder_email = reminder_email;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override

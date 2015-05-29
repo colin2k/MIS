@@ -1,7 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/story_1" android:title="@string/story_1"
-        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/action_new_note" android:title="@string/action_new_note"
+        android:orderInCategory="0" android:showAsAction="always" android:icon="@android:drawable/ic_menu_add"/>
+    <!--<item android:id="@+id/story_1" android:title="@string/story_1"
+        android:orderInCategory="100" />
     <item android:id="@+id/story_2" android:title="@string/story_2"
         android:orderInCategory="100" android:showAsAction="never" />
     <item android:id="@+id/story_3" android:title="@string/story_3"
@@ -25,5 +27,5 @@
     <item android:id="@+id/story_12" android:title="@string/story_12"
         android:orderInCategory="100" android:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" android:showAsAction="never" />
+        android:orderInCategory="100" android:showAsAction="never" />-->
 </menu>

@@ -21,7 +21,7 @@ public class NoteDataSource {
     private SQLiteDatabase database;
     private DatabaseHelper dbHelper;
     private String[] allColumns = { DatabaseHelper.COLUMN_ID,
-            DatabaseHelper.COLUMN_NOTE, DatabaseHelper.COLUMN_HAS_REMINDER, DatabaseHelper.COLUMN_DATETIME};
+            DatabaseHelper.COLUMN_NOTE, DatabaseHelper.COLUMN_HAS_REMINDER, DatabaseHelper.COLUMN_MAIL, DatabaseHelper.COLUMN_LOCATION, DatabaseHelper.COLUMN_PRIORITY, DatabaseHelper.COLUMN_DATETIME};
 
     public NoteDataSource(Context context) {
         dbHelper = new DatabaseHelper(context);
@@ -35,11 +35,13 @@ public class NoteDataSource {
         dbHelper.close();
     }
 
-    public Note createNote(String note, boolean has_reminder, String remind_me_datetime) {
+    public Note createNote(String note, boolean has_reminder, String mail, String location, int priority, String remind_me_datetime) {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_NOTE, note);
-        Log.v("create note:", "has_reminder:" + has_reminder);
         values.put(DatabaseHelper.COLUMN_HAS_REMINDER, has_reminder);
+        values.put(DatabaseHelper.COLUMN_MAIL, mail);
+        values.put(DatabaseHelper.COLUMN_LOCATION, location);
+        values.put(DatabaseHelper.COLUMN_PRIORITY, priority);
         values.put(DatabaseHelper.COLUMN_DATETIME, remind_me_datetime);
 
         long insertId = database.insert(DatabaseHelper.TABLE_NOTES, null,
@@ -53,6 +55,13 @@ public class NoteDataSource {
         return newNote;
     }
 
+   /* public Note createNote(String note, boolean has_reminder, String reminder_email, String location, int priority, String remind_me_datetime) {
+        Note newNote = this.createNote(note, has_reminder, reminder_email, location, priority,remind_me_datetime);
+        newNote.setReminder_email(reminder_email);
+
+        return newNote;
+    }*/
+
     public void deleteNote(Note note) {
         long id = note.getId();
         System.out.println("Note deleted with id: " + id);
@@ -64,7 +73,12 @@ public class NoteDataSource {
         ContentValues args = new ContentValues();
         args.put("note", note.getNoteText());
         args.put("has_reminder", note.getHasReminder());
-        args.put("remind_date", note.getDatetimeStr());
+
+        args.put(DatabaseHelper.COLUMN_MAIL, note.getReminder_email());
+        args.put(DatabaseHelper.COLUMN_LOCATION, note.getLocation());
+        args.put(DatabaseHelper.COLUMN_PRIORITY, note.getPriority());
+
+        args.put(DatabaseHelper.COLUMN_DATETIME, note.getDatetimeStr());
         database.update(DatabaseHelper.TABLE_NOTES, args, "_id=" + note.getId(), null);
     }
 
@@ -106,7 +120,10 @@ public class NoteDataSource {
         note.setId(cursor.getLong(0));
         note.setNoteText(cursor.getString(1));
         note.setHasReminder(cursor.getInt(2) == 1);
-        note.setDatetimeStr(cursor.getString(3));
+        note.setReminder_email(cursor.getString(3));
+        note.setLocation(cursor.getString(4));
+        note.setPriority(cursor.getInt(5));
+        note.setDatetimeStr(cursor.getString(6));
         return note;
     }
 }
