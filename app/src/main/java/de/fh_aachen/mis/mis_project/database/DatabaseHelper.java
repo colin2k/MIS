@@ -16,7 +16,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_HAS_REMINDER = "has_reminder";
     public static final String COLUMN_DATETIME = "remind_date";
     public static final String COLUMN_MAIL = "remind_mail";
-    public static final String COLUMN_LOCATION = "remind_location";
+    public static final String COLUMN_LOCATION_LAT = "remind_location_lat";
+    public static final String COLUMN_LOCATION_LNG = "remind_location_lng";
     public static final String COLUMN_PRIORITY = "remind_priority";
 
     private static final String DATABASE_NAME = "notes.db";
@@ -29,7 +30,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + " text not null,"
             + COLUMN_HAS_REMINDER + " integer NOT NULL,"
             + COLUMN_MAIL + " text NOT NULL,"
-            + COLUMN_LOCATION + " text NOT NULL,"
+            + COLUMN_LOCATION_LAT + " double NOT NULL,"
+            + COLUMN_LOCATION_LNG + " double NOT NULL,"
             + COLUMN_PRIORITY + " integer NOT NULL,"
             + COLUMN_DATETIME + " text NOT NULL);";
 

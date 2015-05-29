@@ -18,7 +18,8 @@ public class Note {
     private String datetime_str;
     private String reminder_email;
 
-    private String location;
+    private Double location_lat;
+    private Double location_lng;
     private int priority;
 
     public long getId() {
@@ -77,12 +78,20 @@ public class Note {
         this.reminder_email = reminder_email;
     }
 
-    public String getLocation() {
-        return location;
+    public void setLocationLat(Double location_lat) {
+        this.location_lat = location_lat;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocationLng(Double location_lng) {
+        this.location_lng = location_lng;
+    }
+
+    public Double getLocationLat() {
+        return this.location_lat;
+    }
+
+    public Double getLocationLng() {
+        return this.location_lng;
     }
 
     public int getPriority() {
@@ -96,7 +105,8 @@ public class Note {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy H:m:s");
-        SimpleDateFormat myformat = new SimpleDateFormat("dd-MM-yyyy H:m");
+        SimpleDateFormat myformat;
+        myformat = new SimpleDateFormat("dd-MM-yyyy H:m");
         String formatted_date = null;
         try {
             formatted_date = myformat.format(sdf.parse(datetime_str));

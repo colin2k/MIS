@@ -50,8 +50,8 @@ public class NewNoteActivity extends Activity implements GoogleMap.OnMapClickLis
     Switch remind_me_switch;
     EditText textarea;
     EditText reminder_email;
+    Button btnPlacePicker;
 
-    private Button btnPlacePicker;
     private LatLng location;
     private TextView txtLocation;
     private Spinner prioSpinner;
@@ -103,7 +103,7 @@ public class NewNoteActivity extends Activity implements GoogleMap.OnMapClickLis
                 String text = textarea.getText().toString();
                 boolean has_reminder = remind_me_switch.isChecked();
                 email = reminder_email.getText().toString();
-                Note note = datasource.createNote(text,has_reminder, email, location.toString(), prioSpinner.getSelectedItemPosition(), remind_me_datetime );
+                Note note = datasource.createNote(text,has_reminder, email, location.latitude,location.longitude, prioSpinner.getSelectedItemPosition(), remind_me_datetime );
 
                 // set up an alert if the note has a reminder
                 if (has_reminder) {
@@ -114,7 +114,7 @@ public class NewNoteActivity extends Activity implements GoogleMap.OnMapClickLis
 
                     // Build a calendar instance to get the milliseconds of note.getDate
                     Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy H:mm:ss");
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy H:mm:ss",Locale.GERMAN);
                     try {
                         Date parsedDate = formatter.parse(note.getDatetimeStr());
                         cal.setTime(parsedDate);
