@@ -53,15 +53,6 @@
             android:text="Edit Multiple Reminders"
             android:id="@+id/edit_multiple_reminders" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/note_email"
-            android:hint="@string/note_email_hint" />
-
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +80,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="@string/btnSave"
         android:id="@+id/note_save_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>

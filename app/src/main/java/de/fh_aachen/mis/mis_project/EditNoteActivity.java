@@ -121,8 +121,6 @@ public class EditNoteActivity extends Activity {
                 boolean has_multi_reminder = multi_remind_me_switch.isChecked();
 
                 email = reminder_email.getText().toString();
-                Note note = datasource.createNote(text,has_reminder, email, location.latitude,location.longitude, prioSpinner.getSelectedItemPosition(), remind_me_datetime );
-
                 note.setDatetimeStr(remind_me_datetime);
                 note.setHasReminder(has_reminder);
                 note.setNoteText(text);
