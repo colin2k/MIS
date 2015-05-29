@@ -14,14 +14,32 @@
         android:layout_alignParentTop="true"
         android:layout_above="@+id/note_save_button">
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerPrio"
+            android:spinnerMode="dropdown"
+            android:entries="@array/prioritaeten"
+            android:textSize="20sp"
+            android:layout_column="1" />
+
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/note_data"
             android:layout_weight="0.62"
             android:textAlignment="gravity" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/note_email"
+            android:hint="@string/note_email_hint" />
+
 
         <Switch
             android:layout_width="match_parent"
@@ -35,15 +53,34 @@
             android:text="Edit Multiple Reminders"
             android:id="@+id/edit_multiple_reminders" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPlace"
+            android:text="@string/txtPlace"
+            android:textSize="20sp"
+            />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnPlace"
+            android:id="@+id/btnPlace" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtPickedPlace"
+            android:text="@string/txtPickedPlace"
+            android:textSize="20sp"
+            android:layout_span="2"/>
 
     </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="@string/btnSave"
         android:id="@+id/note_save_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>

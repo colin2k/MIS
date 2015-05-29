@@ -22,6 +22,7 @@
     <string name="title_activity_place_note">Adressen Notiz</string>
     <string name="txtPlace">Adresse</string>
     <string name="btnPlace">Adresse auswählen</string>
+    <string name="btnSave">Speichern</string>
     <string name="txtPickedPlace">Adresse auswählen</string>
 
 

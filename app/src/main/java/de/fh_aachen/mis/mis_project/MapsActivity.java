@@ -1,16 +1,18 @@
 package de.fh_aachen.mis.mis_project;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity {
@@ -24,6 +26,21 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         location = (LatLng) extras.get("location");
+
+        ConnectivityManager cm =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if (!isConnected) {
+            Intent in = new Intent();
+            in.putExtra("location", location);
+            setResult(1, in);
+            Toast.makeText(this, "Es wurde keine Verbindung zum Internet gefunden.", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
     }
@@ -80,8 +97,8 @@ public class MapsActivity extends FragmentActivity {
             @Override
             public void onMapLongClick(LatLng latLng) {
                 Intent i = getIntent();
-                i.putExtra("location",latLng);
-                setResult(1,i);
+                i.putExtra("location", latLng);
+                setResult(1, i);
                 finish();
 
             }

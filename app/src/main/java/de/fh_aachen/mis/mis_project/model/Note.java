@@ -1,12 +1,15 @@
 package de.fh_aachen.mis.mis_project.model;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by batman on 5/25/15.
  */
 public class Note {
+
     private long id;
     private String note;
     private boolean has_reminder;
@@ -14,6 +17,10 @@ public class Note {
     private Time remind_time;
     private String datetime_str;
     private String reminder_email;
+
+    private Double location_lat;
+    private Double location_lng;
+    private int priority;
 
     public long getId() {
         return id;
@@ -71,8 +78,41 @@ public class Note {
         this.reminder_email = reminder_email;
     }
 
+    public void setLocationLat(Double location_lat) {
+        this.location_lat = location_lat;
+    }
+
+    public void setLocationLng(Double location_lng) {
+        this.location_lng = location_lng;
+    }
+
+    public Double getLocationLat() {
+        return this.location_lat;
+    }
+
+    public Double getLocationLng() {
+        return this.location_lng;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
-        return note + (has_reminder ? ("\nwhen: " + datetime_str) : "");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy H:m:s");
+        SimpleDateFormat myformat;
+        myformat = new SimpleDateFormat("dd-MM-yyyy H:m");
+        String formatted_date = null;
+        try {
+            formatted_date = myformat.format(sdf.parse(datetime_str));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return note + (has_reminder ? ("\nWhen: " + formatted_date) : "");
     }
 }

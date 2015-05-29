@@ -17,8 +17,12 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,15 +37,22 @@ import de.fh_aachen.mis.mis_project.receiver.AlarmReceiver;
 
 public class EditNoteActivity extends Activity {
 
-    private Note note;
+    String email;
     private NoteDataSource datasource;
 
+    Note note;
     Button save_btn;
     Switch remind_me_switch;
     Switch multi_remind_me_switch;
     EditText textarea;
     Context context;
     String remind_me_datetime;
+    TextView txtLocation;
+    Button btnPlacePicker;
+
+    private LatLng location;
+    private Spinner prioSpinner;
+    private EditText reminder_email;
 
     private DatePickerDialog remind_me_date_picker;
     private TimePickerDialog remind_me_time_picker;
@@ -63,12 +74,12 @@ public class EditNoteActivity extends Activity {
 
         Intent intent = getIntent();
         final String note_id = intent.getStringExtra("note_id");
-
-
+        note = datasource.getNoteById(Long.parseLong(note_id, 10));
+        location = new LatLng(note.getLocationLat(), note.getLocationLng()); // FH-Aachen
 
         context = this;
 
-        note = datasource.getNoteById(Long.parseLong(note_id, 10));
+
         Log.v("note edit loaded: ", note.toString());
         remind_me_datetime = note.getDatetimeStr();
 
@@ -80,13 +91,27 @@ public class EditNoteActivity extends Activity {
         multi_remind_me_switch = (Switch) findViewById(R.id.edit_multiple_reminders);
         textarea = (EditText) findViewById(R.id.note_data);
 
+        reminder_email = (EditText) findViewById(R.id.note_email);
+        prioSpinner = (Spinner) findViewById(R.id.spinnerPrio);
+        txtLocation = (TextView) this.findViewById(R.id.txtPickedPlace);
+
+        txtLocation.setText(location.toString());
+
         multi_remind_me_switch.setVisibility(View.INVISIBLE);
         textarea.setText(note.getNoteText());
         remind_me_switch.setChecked(note.getHasReminder());
         if(note.getHasReminder()){
             multi_remind_me_switch.setVisibility(View.VISIBLE);
         }
-
+        btnPlacePicker = (Button) findViewById(R.id.btnPlace);
+        btnPlacePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra("location", location);
+                startActivityForResult(intent, 2);
+            }
+        });
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,9 +120,14 @@ public class EditNoteActivity extends Activity {
                 boolean has_reminder = remind_me_switch.isChecked();
                 boolean has_multi_reminder = multi_remind_me_switch.isChecked();
 
+                email = reminder_email.getText().toString();
                 note.setDatetimeStr(remind_me_datetime);
                 note.setHasReminder(has_reminder);
                 note.setNoteText(text);
+                note.setReminder_email(email);
+                note.setLocationLat(location.latitude);
+                note.setLocationLng(location.longitude);
+                note.setPriority(prioSpinner.getSelectedItemPosition());
 
                 datasource.updateNote(note);
 
@@ -217,6 +247,10 @@ public class EditNoteActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            location = (LatLng)data.getExtras().get("location");
+            txtLocation.setText(location.toString());
+        }
         if(resultCode==RESULT_OK){
 
             /*Intent refresh = new Intent(this, AbhaengigeErinnerungenActivity.class);
