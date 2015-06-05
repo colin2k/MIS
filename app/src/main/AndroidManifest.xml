@@ -73,6 +73,13 @@
             android:name=".PlaceNoteActivity"
             android:label="@string/title_activity_maps" >
         </activity>
+        <activity
+            android:name=".ListSearchActivity"
+            android:label="@string/title_activity_list_search" >
+            <intent-filter>
+                <action android:name=".ListSearch"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

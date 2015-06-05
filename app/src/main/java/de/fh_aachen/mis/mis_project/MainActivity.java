@@ -10,10 +10,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.text.TextUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
+import android.app.SearchManager;
+import android.widget.SearchView.OnQueryTextListener;
 
 import java.util.List;
 
@@ -21,20 +25,20 @@ import de.fh_aachen.mis.mis_project.database.NoteDataSource;
 import de.fh_aachen.mis.mis_project.model.Note;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnQueryTextListener{
 
     private ListView note_list;
     private ArrayAdapter<Note> note_list_adapter;
     private NoteDataSource datasource;
 
-    Context context;
+    final Context context=this;
+    Menu m;
+    android.widget.Filter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        context = this;
 
         setTitle("Overview");
         note_list = (ListView) findViewById(R.id.note_list);
@@ -48,6 +52,8 @@ public class MainActivity extends Activity {
                 android.R.layout.simple_list_item_1, values);
         Log.v("notes:", "" + note_list_adapter.getCount() + " datasets loaded.");
         note_list.setAdapter(note_list_adapter);
+        note_list.setTextFilterEnabled(false);
+        filter = note_list_adapter.getFilter();
     }
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -101,12 +107,47 @@ public class MainActivity extends Activity {
         super.onPause();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
+
+
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText)
+    {
+        // this is your adapter that will be filtered
+      /*  if (TextUtils.isEmpty(newText))
+        {
+            note_list.clearTextFilter();
+        }
+        else
+        {
+            note_list.setFilterText(newText.toString());
+        }*/
+
+        filter.filter(newText);
+
         return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        // TODO Auto-generated method stub
+        return false;
     }
 
     @Override
@@ -119,29 +160,35 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-
-        if (id == R.id.action_new_note) {
+        }else if (id == R.id.action_new_note) {
             Intent intent = new Intent(this, NewNoteActivity.class);
             startActivityForResult(intent, 1);
-            reloadAllData();
+            //reloadAllData();
 
             return true;
         }
+        /*
+        else if (id == R.id.menu_search) {
+            onSearchRequested();
+            return true;
+        }*/
 
-        return super.onOptionsItemSelected(item);
+        return false;
+        //return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
-            Intent refresh = new Intent(this, AbhaengigeErinnerungenActivity.class);
-            startActivity(refresh);
+            //Intent refresh = new Intent(this, MainActivity.class);
+            //startActivity(refresh);
             //Log.v("refreshing note list view","");
             this.finish();
+            startActivity(getIntent());
         }
     }
+
 
     /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {

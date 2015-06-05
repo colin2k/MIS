@@ -1,8 +1,10 @@
 package de.fh_aachen.mis.mis_project.database;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.Cursor;
 import android.util.Log;
 
 /**
@@ -22,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "notes.db";
     private static final int DATABASE_VERSION = 5;
+    private static SQLiteDatabase mDb;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
@@ -42,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
+        mDb = database;
     }
 
     @Override
@@ -51,6 +55,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
         onCreate(db);
+    }
+
+    public Cursor searchNote(String input) throws SQLException {
+        String query = "SELECT docid as _id," + COLUMN_NOTE + " from " + TABLE_NOTES + " where " + COLUMN_NOTE + " MATCH '" + input + "';";
+
+        Cursor mCursor = mDb.rawQuery(query, null);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        return mCursor;
     }
 
 }

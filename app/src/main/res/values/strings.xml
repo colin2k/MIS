@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">MIS-Project</string>
+    <string name="app_name_search">Search Activity</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -25,7 +26,8 @@
     <string name="btnSave">Speichern</string>
     <string name="txtPickedPlace">Adresse auswählen</string>
 
-
+    <string name="app_label">Overview</string>
+    <string name="search_hint">Suche</string>
 
     <string name="Notizname">Beispielnotiz</string>
 
@@ -42,4 +44,8 @@
     <string name="title_activity_alarm">AlarmActivity</string>
     <string name="note_email_hint">E-Mail for notifications</string>
     <string name="title_activity_maps">PlacePicker</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+
+    <string name="menu_search">Search</string>
+    <string name="title_activity_list_search">ListSearchActivity</string>
 </resources>
