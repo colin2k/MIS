@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PRIORITY = "remind_priority";
 
     private static final String DATABASE_NAME = "notes.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static SQLiteDatabase mDb;
 
     // Database creation sql statement

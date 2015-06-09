@@ -10,6 +10,8 @@
         android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_new_note" android:title="@string/action_new_note"
         android:showAsAction="always" android:icon="@android:drawable/ic_menu_add"/>
+    <item android:id="@+id/action_export" android:title="@string/action_export"
+        android:showAsAction="never"/>
 
     <!--<item android:id="@+id/story_1" android:title="@string/story_1"
         android:orderInCategory="100" />

@@ -166,7 +166,11 @@ public class MainActivity extends Activity implements OnQueryTextListener{
             //reloadAllData();
 
             return true;
-        }
+        }else if (id == R.id.action_export) {
+            Intent intent = new Intent(this, ExportActivity.class);
+            startActivityForResult(intent, 1);
+        return true;
+    }
         /*
         else if (id == R.id.menu_search) {
             onSearchRequested();

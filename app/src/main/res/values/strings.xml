@@ -25,6 +25,7 @@
     <string name="btnPlace">Adresse auswählen</string>
     <string name="btnSave">Speichern</string>
     <string name="txtPickedPlace">Adresse auswählen</string>
+    <string name="action_export">Export</string>
 
     <string name="app_label">Overview</string>
     <string name="search_hint">Suche</string>
@@ -48,4 +49,5 @@
 
     <string name="menu_search">Search</string>
     <string name="title_activity_list_search">ListSearchActivity</string>
+    <string name="title_activity_export">ExportActivity</string>
 </resources>

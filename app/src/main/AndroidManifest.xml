@@ -77,8 +77,12 @@
             android:name=".ListSearchActivity"
             android:label="@string/title_activity_list_search" >
             <intent-filter>
-                <action android:name=".ListSearch"/>
+                <action android:name=".ListSearch" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ExportActivity"
+            android:label="@string/title_activity_export" >
         </activity>
     </application>
 
