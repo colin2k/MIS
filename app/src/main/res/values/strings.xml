@@ -50,4 +50,6 @@
     <string name="menu_search">Search</string>
     <string name="title_activity_list_search">ListSearchActivity</string>
     <string name="title_activity_export">ExportActivity</string>
+    <string name="btnPhoto">Foto aufnehmen</string>
+    <string name="album_name">MIS_Notes</string>
 </resources>
