@@ -336,6 +336,7 @@ public class EditNoteActivity extends Activity {
         Intent mediaScanIntent = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
         File f = new File(mCurrentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
+        Log.v("gallary",mCurrentPhotoPath);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
