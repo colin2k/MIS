@@ -83,30 +83,11 @@ public class EditNoteActivity extends Activity {
     }
 
     private File getAlbumDir() {
-        File storageDir = null;
 
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-
-            storageDir = new File (
-                    Environment.getExternalStorageDirectory()
-                            + "dcim"
-                            + getAlbumName()
-            );
-
-            if (storageDir != null) {
-                if (! storageDir.mkdirs()) {
-                    if (! storageDir.exists()){
-                        Log.d("CameraSample", "failed to create directory");
-                        return null;
-                    }
-                }
-            }
-
-        } else {
-            Log.v(getString(R.string.app_name), "External storage is not mounted READ/WRITE.");
-        }
-
-        return storageDir;
+        File sdCard = Environment.getExternalStorageDirectory();
+        File dir = new File (sdCard.getAbsolutePath() + "/MIS-Notes");
+        dir.mkdirs();
+        return dir;
     }
 
 

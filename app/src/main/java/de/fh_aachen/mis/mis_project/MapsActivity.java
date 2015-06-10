@@ -20,6 +20,13 @@ public class MapsActivity extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private LatLng location;
 
+    @Override
+    public void onBackPressed() {
+        Intent i = getIntent();
+        i.putExtra("location", location);
+        setResult(1, i);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +107,6 @@ public class MapsActivity extends FragmentActivity {
                 i.putExtra("location", latLng);
                 setResult(1, i);
                 finish();
-
             }
         });
 
