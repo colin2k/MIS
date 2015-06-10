@@ -375,7 +375,7 @@ public class EditNoteActivity extends Activity {
             case 666: {
                 if (resultCode == RESULT_OK) {
                     if (mCurrentPhotoPath != null) {
-//                        setPic();
+                        setPic();
                         galleryAddPic();
                         mCurrentPhotoPath = null;
                     }
